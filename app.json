@@ -1,0 +1,8 @@
+{
+    "name": "labobooks",
+    "description": "研究室規模の書籍を管理するツール.",
+    "logo": "https://i.imgur.com/DbLghAK.png",
+    "repository": "https://github.com/bungoume/labobooks",
+    "keywords": ["laboratory", "bookshelf", "management"],
+    "success_url": "/"
+}
