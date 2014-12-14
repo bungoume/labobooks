@@ -8,5 +8,8 @@
     "addons": [
         "heroku-postgresql",
         "sendgrid"
-    ]
+    ],
+    "scripts": {
+        "postdeploy": "sh -c 'python labobooks/manage.py migrate --noinput'"
+    }
 }
