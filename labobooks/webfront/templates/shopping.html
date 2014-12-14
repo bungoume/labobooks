@@ -1,13 +1,56 @@
 {% extends "base.html" %}
 
-{% block title%}ダッシュボード{% endblock %}
+{% block title%}書籍を探す{% endblock %}
 
 {% block content %}
+{% verbatim %}
 <section class="content-header">
 </section>
 
 <section class="content">
+<div class="box box-success">
+    <div class="box-header">
+        <h3 class="box-title">書籍を探す</h3>
+    </div>
+    <div class="box-body">
+        <form id="search" role="form">
+            <div class="input-group input-group-sm">
+                <input class="form-control input-lg" type="text" placeholder="本のタイトルを入力">
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-flat" type="submit">Go!</button>
+                </span>
+            </div>
+        </form>
+        <br>
+        <div id="search-result" class="table-responsive no-padding">
+            <table class="table table-hover"><tbody>
+                <tr>
+                    <th></th>
+                    <th>タイトル</th>
+                    <th>著者</th>
+                    <th>出版社</th>
+                    <th>発売日</th>
+                    <th></th>
+                </tr>
+                <tr v-repeat="item:Items">
+                    <td><img src="{{item.smallImageUrl}}"></td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.author}}</td>
+                    <td>{{item.publisherName}}</td>
+                    <td>{{item.salesDate}}</td>
+                    <td>
+                        <input type="hidden" value="{{item.isbn}}">
+                        <button class="btn btn-default">追加</button>
+                    </td>
+                </tr>
+            </tbody></table>
+        </div>
+    </div>
+</div>
+
+
 </section>
+{% endverbatim %}
 {% endblock %}
 
 
@@ -15,6 +58,28 @@
 {% verbatim %}
 <script>
 'use strict';
+
+  var result_view = new Vue({
+    el: '#search-result',
+    data: {Items: []}
+  });
+
+
+function book_search(evt){
+    evt.preventDefault();
+    $('#search-result').closest('.box')
+      .append('<div class="overlay"></div>')
+      .append('<div class="loading-img"></div>');
+
+    var keyword = $('#search input').val();
+    $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
+        $('.overlay').remove();
+        $('.loading-img').remove();
+        result_view.$data.Items = data.Items;
+    });
+}
+
+$('#search').on('submit', book_search);
 
 </script>
 {% endverbatim %}
