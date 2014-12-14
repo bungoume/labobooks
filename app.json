@@ -4,5 +4,9 @@
     "logo": "https://i.imgur.com/DbLghAK.png",
     "repository": "https://github.com/bungoume/labobooks",
     "keywords": ["laboratory", "bookshelf", "management"],
-    "success_url": "/"
+    "success_url": "/",
+    "addons": [
+        "heroku-postgresql",
+        "sendgrid"
+    ]
 }
