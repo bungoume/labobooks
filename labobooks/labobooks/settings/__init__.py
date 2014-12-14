@@ -39,8 +39,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # third-party programs
+    'rest_framework',
 
     # Project applications
+    'core',
+    'coreapi',
+    'webfront',
 )
 
 MIDDLEWARE_CLASSES = (
