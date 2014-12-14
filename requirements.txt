@@ -2,5 +2,6 @@ Django==1.7.1
 djangorestframework==3.0.1
 dj-database-url==0.3.0
 psycopg2==2.5.4
+requests==2.5.0
 uwsgi
 whitenoise==1.0.5
