@@ -3,6 +3,7 @@ labobooks
 
 OSSの研究室向け蔵書管理システム
 
+![bookshelf-icon](bookshelf-icon.png)
 
 ## Description
 小さな研究室で書籍を管理するのはなかなか大変です。
@@ -16,7 +17,7 @@ Herokuを利用することで容易にデプロイでき、 自分の研究室�
 
 ## Install
 Herokuのアカウントがあれば、以下のボタンを押すだけです。
-		
+
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
