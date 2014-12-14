@@ -39,15 +39,14 @@
                     <td>{{item.publisherName}}</td>
                     <td>{{item.salesDate}}</td>
                     <td>
-                        <input type="hidden" value="{{item.isbn}}">
-                        <button class="btn btn-default">追加</button>
+                        <input class="isbn" type="hidden" value="{{item.isbn}}">
+                        <button class="btn btn-default book-add">追加</button>
                     </td>
                 </tr>
             </tbody></table>
         </div>
     </div>
 </div>
-
 
 </section>
 {% endverbatim %}
@@ -56,13 +55,61 @@
 
 {% block tail_script %}
 {% verbatim %}
+<script type="text/template" id="modal-template">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-title" id="myModalLabel">書籍を追加</h4>
+    </div>
+    <div class="modal-body">
+        <h3>{{title}}</h3>
+        <form>
+            <input type="hidden" class="form-control" id="isbn" value="{{isbn}}">
+            <div class="form-group">
+                <label>購入日</label>
+                <input type="date" class="form-control" id="buy_date" placeholder="購入日">
+            </div>
+            <div class="form-group">
+                <label>購入者</label>
+                <input type="text" class="form-control" id="manager" placeholder="管理責任者">
+            </div>
+            <div class="form-group">
+                <label>購入目的</label>
+                <input type="text" class="form-control" id="purpose" placeholder="購入目的">
+            </div>
+            <div class="form-group">
+                <label>資金源</label>
+                <input type="text" class="form-control" id="money_source" placeholder="資金源">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button id="submit_add_book" type="button" class="btn btn-primary">追加</button>
+    </div>
+  </div>
+</div>
+</script>
+
+
 <script>
 'use strict';
 
-  var result_view = new Vue({
-    el: '#search-result',
-    data: {Items: []}
-  });
+var result_view;
+var modal_template = $('#modal-template').html();
+var book_data;
+
+$(function(){
+    result_view = new Vue({
+        el: '#search-result',
+        data: {Items: []}
+    });
+
+    $('#search').on('submit', book_search);
+    $('#search-result').on('click', '.book-add', add_book);
+    $('#myModal').on('click', '#submit_add_book', submit_add_book);
+});
 
 
 function book_search(evt){
@@ -75,11 +122,41 @@ function book_search(evt){
     $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
         $('.overlay').remove();
         $('.loading-img').remove();
-        result_view.$data.Items = data.Items;
+        result_view.$data.Items = _.cloneDeep(data.Items);
+        book_data = data.Items;
     });
 }
 
-$('#search').on('submit', book_search);
+function add_book(evt){
+    var isbn = $(this).parent().find('input.isbn').val();
+    var book = _.find(book_data, function(o){return o.isbn == isbn});
+    $('#myModal').html(Hogan.compile(modal_template).render(book)).modal();
+}
+
+function submit_add_book(evt){
+    var isbn = $('#isbn').val();
+    var book = _.find(book_data, function(o){return o.isbn == isbn});
+    $.ajax({ 
+        type: 'POST',
+        url: '/api/data/v1/bookinfo/',
+        data: book
+    }).then(function(data){
+        console.log(data);
+        $.ajax({ 
+            type: 'POST',
+            url: '/api/data/v1/mybook/',
+            data: {
+                //buy_date: $('#buy_date').val(),
+                manager: $('#manager').val(),
+                purpose: $('#purpose').val(),
+                money_source: $('#money_source').val(),
+            }
+        });
+    });
+
+    $('#myModal').modal('hide');
+}
+
 
 </script>
 {% endverbatim %}
