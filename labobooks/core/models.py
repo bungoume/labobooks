@@ -22,7 +22,7 @@ class MyBook(models.Model):
 
 
 class BookInfo(models.Model):
-    isbn = models.CharField("ISBN", primary_key=True, max_length=20)
+    isbn = models.CharField("ISBN", unique=True, max_length=20)
     title = models.CharField("タイトル", max_length=191)
     title_kana = models.CharField("タイトル(カナ)", max_length=191, blank=True)
     sub_title = models.CharField("サブタイトル", max_length=191, blank=True)

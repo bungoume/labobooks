@@ -139,7 +139,24 @@ function submit_add_book(evt){
     $.ajax({ 
         type: 'POST',
         url: '/api/data/v1/bookinfo/',
-        data: book
+        data: {
+            isbn: book.isbn,
+            title: book.title,
+            title_kana: book.titleKana,
+            sub_title: book.subTitle,
+            sub_title_kana: book.subTitleKana,
+            series_name: book.seriesName,
+            series_name_kana: book.seriesNameKana,
+            author: book.author,
+            author_kana: book.authorKana,
+            publisher_name: book.publisherName,
+            book_size: book.size,
+            item_caption: book.itemCaption,
+            sales_date: Date.create(book.salesDate, 'ja').format('{yyyy}-{MM}-{dd}'),
+            item_price: book.itemPrice,
+            image_url: book.smallImageUrl,
+            genre_id: book.booksGenreId,
+        }
     }).then(function(data){
         console.log(data);
         $.ajax({ 
