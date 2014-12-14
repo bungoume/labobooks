@@ -10,13 +10,13 @@ from django.db import models
 
 class MyBook(models.Model):
     book_info = models.ForeignKey('BookInfo')
-    buy_date = models.DateField("購入日", blank=True)
-    buy_user = models.CharField("購入希望者", max_length=191)
+    buy_date = models.DateField("購入日", null=True)
+    buy_user = models.CharField("購入希望者", max_length=191, blank=True)
     manager = models.CharField("管理責任者", max_length=191)
     buy_at = models.CharField("購入場所", max_length=191, blank=True)
     purpose = models.TextField("購入目的", blank=True)
     money_source = models.CharField("資金源", max_length=191, blank=True)
-    book_expire_at = models.DateField("本の賞味期限", blank=True)
+    book_expire_at = models.DateField("本の賞味期限", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -34,7 +34,7 @@ class BookInfo(models.Model):
     publisher_name = models.CharField("出版社", max_length=191, blank=True)
     book_size = models.CharField("本サイズ", max_length=191, blank=True)
     item_caption = models.TextField("キャプション", blank=True)
-    sales_date = models.DateField("発売日", blank=True)
+    sales_date = models.DateField("発売日", null=True)
     item_price = models.IntegerField("価格", blank=True)
     image_url = models.URLField("画像URL", blank=True)
     genre_id = models.CharField("書籍ジャンル", max_length=191, blank=True)

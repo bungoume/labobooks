@@ -163,7 +163,8 @@ function submit_add_book(evt){
             type: 'POST',
             url: '/api/data/v1/mybook/',
             data: {
-                //buy_date: $('#buy_date').val(),
+                buy_date: $('#buy_date').val(),
+                book_info: data.url,
                 manager: $('#manager').val(),
                 purpose: $('#purpose').val(),
                 money_source: $('#money_source').val(),
