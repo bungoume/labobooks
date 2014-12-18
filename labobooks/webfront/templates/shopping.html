@@ -139,6 +139,7 @@ function submit_add_book(evt){
     $.ajax({ 
         type: 'POST',
         url: '/api/data/v1/bookinfo/',
+        headers: { "X-CSRFToken": $.cookie("csrftoken") },
         data: {
             isbn: book.isbn,
             title: book.title,
@@ -161,6 +162,7 @@ function submit_add_book(evt){
         $.ajax({ 
             type: 'POST',
             url: '/api/data/v1/mybook/',
+            headers: { "X-CSRFToken": $.cookie("csrftoken") },
             data: {
                 buy_date: $('#buy_date').val(),
                 book_info: data.url,
