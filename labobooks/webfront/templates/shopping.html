@@ -165,7 +165,7 @@ function submit_add_book(evt){
             headers: { "X-CSRFToken": $.cookie("csrftoken") },
             data: {
                 buy_date: $('#buy_date').val(),
-                book_info: data.url,
+                book_info: data.isbn,
                 manager: $('#manager').val(),
                 purpose: $('#purpose').val(),
                 money_source: $('#money_source').val(),
