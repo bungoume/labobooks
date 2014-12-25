@@ -1,6 +1,7 @@
 labobooks
 =========
 [![Circle CI](https://circleci.com/gh/bungoume/labobooks.svg?style=shield&circle-token=2f845991fa79124b57e0c1222bd14edd88581efd)](https://circleci.com/gh/bungoume/labobooks)
+[![Dependency Status](https://gemnasium.com/bungoume/labobooks.svg)](https://gemnasium.com/bungoume/labobooks)
 [![License](http://img.shields.io/:license-MIT-blue.svg)](http://doge.mit-license.org)
 
 OSSの研究室向け蔵書管理システム
