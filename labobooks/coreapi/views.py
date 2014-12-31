@@ -31,9 +31,8 @@ def search_bookinfo(request):
         'formatVersion': 2,
         'sort': 'sales',
         # 'elements': 'title,seriesName,author,publisherName,salesDate,mediumImageUrl,isbn',
-
     }
-    
+
     keyword = request.GET.get('keyword', '')
     if keyword:
         params['title'] = keyword
