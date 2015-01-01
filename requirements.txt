@@ -1,4 +1,5 @@
 Django==1.7.1
+django-user-accounts==1.0.1
 djangorestframework==3.0.2
 dj-database-url==0.3.0
 python-social-auth==0.2.1

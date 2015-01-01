@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # third-party programs
+    'account',
     'rest_framework',
     'social.apps.django_app.default',
 
