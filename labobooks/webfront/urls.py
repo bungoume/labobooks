@@ -6,7 +6,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
     '',
-    url(r'^$', RedirectView.as_view(url='dashboard'), name='go-to-dashboard'),
+    url(r'^$', RedirectView.as_view(url='dashboard'), name='home'),
     url(r'^dashboard', TemplateView.as_view(template_name="dashboard.html")),
     url(r'^indices', TemplateView.as_view(template_name="indices.html")),
     url(r'^shopping', TemplateView.as_view(template_name="shopping.html")),

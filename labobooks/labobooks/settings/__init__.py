@@ -47,6 +47,10 @@ INSTALLED_APPS = (
     'core',
     'coreapi',
     'webfront',
+
+    # third-party templates
+    'bootstrapform',
+    'pinax_theme_bootstrap',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,8 +71,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
-    # 'django.core.context_processors.request',
+    'django.core.context_processors.request',
     # 'django.contrib.messages.context_processors.messages',
+    'pinax_theme_bootstrap.context_processors.theme',
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
 )
