@@ -40,7 +40,7 @@ INSTALLED_APPS = (
 
     # third-party programs
     'rest_framework',
-    # 'social.apps.django_app.default',
+    'social.apps.django_app.default',
 
     # Project applications
     'core',
@@ -68,8 +68,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     # 'django.core.context_processors.request',
     # 'django.contrib.messages.context_processors.messages',
-    # 'social.apps.django_app.context_processors.backends',
-    # 'social.apps.django_app.context_processors.login_redirect',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 ROOT_URLCONF = 'labobooks.urls'
@@ -114,11 +114,11 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # For Python-Social-Auth Config
 
-# AUTHENTICATION_BACKENDS = (
-#     'social.backends.google.GoogleOAuth2',
-#     'social.backends.twitter.TwitterOAuth',
-#     'django.contrib.auth.backends.ModelBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
-# SOCIAL_AUTH_URL_NAMESPACE = 'social'
-# SOCIAL_AUTH_LOGIN_URL = '/accounts/'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_URL = '/accounts/'
