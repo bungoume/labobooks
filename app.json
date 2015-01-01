@@ -10,6 +10,6 @@
         "sendgrid"
     ],
     "scripts": {
-        "postdeploy": "sh -c 'python labobooks/manage.py migrate --noinput'"
+        "postdeploy": "sh -c 'python labobooks/manage.py migrate --noinput --settings=labobooks.settings.production'"
     }
 }
