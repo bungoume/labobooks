@@ -1,4 +1,24 @@
-{% extends "theme_bootstrap/base.html" %}
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title%}
+	{% block head_title%}{% endblock %}
+{% endblock %}
 
 
-{% include 'base.html' %}
+{% block content %}
+<section class="content-header">
+</section>
+
+<section class="content">
+	{% block body %}{% endblock %}
+</section>
+{% endblock %}
+
+
+
+{% block tail_script %}
+	{% block extra_script %}{% endblock %}
+{% endblock %}
