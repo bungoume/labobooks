@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     # third-party programs
     'account',
     'rest_framework',
+    'bootstrapform',
     'social.apps.django_app.default',
 
     # Project applications
@@ -49,7 +50,6 @@ INSTALLED_APPS = (
     'webfront',
 
     # third-party templates
-    'bootstrapform',
     'pinax_theme_bootstrap',
 )
 
@@ -118,13 +118,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+LOGIN_REDIRECT_URL = '/dashboard'
+
 # For Python-Social-Auth Config
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.Facebook2OAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_LOGIN_URL = '/accounts/'
+
+SOCIAL_AUTH_TWITTER_KEY = ''
+SOCIAL_AUTH_TWITTER_SECRET = ''
