@@ -12,7 +12,7 @@ class MyBook(models.Model):
     book_info = models.ForeignKey('BookInfo')
     buy_date = models.DateField("購入日", null=True)
     buy_user = models.CharField("購入希望者", max_length=191, blank=True)
-    manager = models.CharField("管理責任者", max_length=191)
+    manager = models.CharField("管理責任者", max_length=191, blank=True)
     buy_at = models.CharField("購入場所", max_length=191, blank=True)
     purpose = models.TextField("購入目的", blank=True)
     money_source = models.CharField("資金源", max_length=191, blank=True)
