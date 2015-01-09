@@ -1,5 +1,7 @@
 labobooks
 =========
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bungoume/labobooks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/bungoume/labobooks.svg?branch=master)](https://travis-ci.org/bungoume/labobooks)
 [![Circle CI](https://circleci.com/gh/bungoume/labobooks.svg?style=shield&circle-token=2f845991fa79124b57e0c1222bd14edd88581efd)](https://circleci.com/gh/bungoume/labobooks)
 [![Coverage Status](https://img.shields.io/coveralls/bungoume/labobooks.svg)](https://coveralls.io/r/bungoume/labobooks)
