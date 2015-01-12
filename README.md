@@ -6,7 +6,7 @@ labobooks
 [![Circle CI](https://circleci.com/gh/bungoume/labobooks.svg?style=shield&circle-token=2f845991fa79124b57e0c1222bd14edd88581efd)](https://circleci.com/gh/bungoume/labobooks)
 [![Coverage Status](https://img.shields.io/coveralls/bungoume/labobooks.svg)](https://coveralls.io/r/bungoume/labobooks)
 [![Dependency Status](https://gemnasium.com/bungoume/labobooks.svg)](https://gemnasium.com/bungoume/labobooks)
-[![License](http://img.shields.io/:license-MIT-blue.svg)](http://doge.mit-license.org)
+[![License](http://img.shields.io/:license-MIT-blue.svg)](LICENSE)
 
 OSSの研究室向け蔵書管理システム
 
@@ -30,7 +30,7 @@ Herokuのアカウントがあれば、以下のボタンを押すだけです�
 
 ## Licence
 
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+[MIT](LICENCE)
 
 
 ## Author
