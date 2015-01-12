@@ -5,6 +5,12 @@
     "repository": "https://github.com/bungoume/labobooks",
     "keywords": ["laboratory", "bookshelf", "management"],
     "success_url": "/",
+    "env": {
+        "DJANGO_SECRET_KEY": {
+            "description": "A randomly generated secret to secure your Django installation",
+            "generator": "secret"
+        }
+    },
     "addons": [
         "heroku-postgresql",
         "sendgrid"

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title%}
+	{% block head_title%}{% endblock %}
+{% endblock %}
+
+
+{% block content %}
+<section class="content-header">
+</section>
+
+<section class="content">
+	{% block body %}{% endblock %}
+</section>
+{% endblock %}
+
+
+
+{% block tail_script %}
+	{% block extra_script %}{% endblock %}
+{% endblock %}
