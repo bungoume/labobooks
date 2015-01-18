@@ -28,9 +28,9 @@ Herokuのアカウントがあれば、以下のボタンを押すだけです�
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
-## Licence
+## License
 
-[MIT](LICENCE)
+[MIT](LICENSE)
 
 
 ## Author
