@@ -1,4 +1,5 @@
 [report]
+include = labobooks/**
 omit =
-    */python?.?/*
-    */site-packages/nose/*
+    labobooks/*/tests/**
+    labobooks/*/tests.py
