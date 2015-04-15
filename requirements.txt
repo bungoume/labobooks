@@ -1,11 +1,11 @@
-Django==1.7.7
-django-bootstrap-form==3.1
+Django==1.8.0
+django-bootstrap-form==3.2
 django-user-accounts==1.0.1
 djangorestframework==3.1.1
 dj-database-url==0.3.0
 pinax-theme-bootstrap==5.6.0
-python-social-auth==0.2.2
+python-social-auth==0.2.6
 psycopg2==2.6
-requests==2.6
+requests==2.6.0
 uWSGI==2.0.10
 whitenoise==1.0.6

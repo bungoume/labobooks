@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from rest_framework import routers
 
@@ -10,9 +10,8 @@ router.register(r'mybook', views.MyBookViewSet)
 router.register(r'bookinfo', views.BookInfoViewSet)
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^data/v1/', include(router.urls)),
     url(r'^info/v1/search', 'coreapi.views.search_bookinfo', name='search_bookinfo'),
     # url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
-)
+]
