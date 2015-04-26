@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from os.path import dirname
-BASE_DIR = dirname(dirname(dirname(__file__)))
+BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
