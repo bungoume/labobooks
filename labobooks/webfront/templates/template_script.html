@@ -19,7 +19,7 @@ var alert_hogan = Hogan.compile($('#alert-template').html());
 var $xhr = function(url, params){
   return $.ajax({url:url, data:params, timeout:15000})
     .fail(function(a){
-      // alert("Request failed: " + a.statusText);
+      console.log("Request failed: " + a.statusText);
       $('.content').prepend(alert_hogan.render({type:'warning', title:'Request failed', body:a.statusText}));
       $('.overlay').remove();
     })
