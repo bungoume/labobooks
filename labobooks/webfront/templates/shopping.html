@@ -119,13 +119,11 @@ function init(){
 function book_search(evt){
     if(evt){evt.preventDefault();}
     $('#search-result').closest('.box')
-      .append('<div class="overlay"></div>')
-      .append('<div class="loading-img"></div>');
+      .append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
 
     var keyword = $('#search input').val();
     $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
         $('.overlay').remove();
-        $('.loading-img').remove();
         result_view.$data.Items = _.cloneDeep(data.Items);
         book_data = data.Items;
     });
