@@ -21,7 +21,7 @@ var $xhr = function(url, params){
     .fail(function(a){
       // alert("Request failed: " + a.statusText);
       $('.content').prepend(alert_hogan.render({type:'warning', title:'Request failed', body:a.statusText}));
-      $('.loading-img').remove();
+      $('.overlay').remove();
     })
 }
 
