@@ -1,1 +1,1 @@
-web: uwsgi --ini uwsgi.ini:heroku
+web: newrelic-admin run-program uwsgi --ini uwsgi.ini:heroku
