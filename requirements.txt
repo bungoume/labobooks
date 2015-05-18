@@ -1,7 +1,7 @@
 Django==1.8.1
 django-bootstrap-form==3.2
 django-user-accounts==1.0.1
-djangorestframework==3.1.1
+djangorestframework==3.1.2
 dj-database-url==0.3.0
 pinax-theme-bootstrap==5.6.0
 python-social-auth==0.2.7
