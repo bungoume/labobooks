@@ -7,5 +7,5 @@ pinax-theme-bootstrap==5.7.6
 python-social-auth==0.2.10
 psycopg2==2.6.1
 requests==2.7.0
-uWSGI==2.0.11
+uWSGI==2.0.11.1
 whitenoise==2.0.2
