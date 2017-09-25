@@ -13,20 +13,17 @@
 <script>
 'use strict';
 
-var alert_hogan = Hogan.compile($('#alert-template').html());
+var alert_handlebars = Handlebars.compile($('#alert-template').html());
 
 
 var $xhr = function(url, params){
   return $.ajax({url:url, data:params, timeout:15000})
     .fail(function(a){
       console.log("Request failed: " + a.statusText);
-      $('.content').prepend(alert_hogan.render({type:'warning', title:'Request failed', body:a.statusText}));
+      $('.content').prepend(alert_handlebars({type:'warning', title:'Request failed', body:a.statusText}));
       $('.overlay').remove();
     })
 }
-
-// modal起動時にスクロールバーの幅調整機能によってデザインずれる問題対応
-$.fn.modal.Constructor.prototype.setScrollbar = function () {}
 
 </script>
 {% endverbatim %}

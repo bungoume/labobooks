@@ -1,11 +1,17 @@
 <header class="main-header">
-    <a href="{% url 'home' %}" class="logo">Labobooks</a>
+    <a href="{% url 'home' %}" class="logo">
+      <span class="logo-mini"><b>L</b>B</span>
+      <span class="logo-lg">Labobooks</span>
+    </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
+        {% if user.is_authenticated %}
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
+        {% endif %}
+
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 {% if user.is_authenticated %}
