@@ -16,3 +16,5 @@ SESSION_COOKIE_SECURE = True
 DATABASES = {
     'default': dj_database_url.config()
 }
+
+LOGGING.update({'root': {'handlers': ['console', 'sentry']}})

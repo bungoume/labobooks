@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'social_django',
     'oauth2_provider',
+    'raven.contrib.django.raven_compat',
 
     # Project applications
     'accountapp',
@@ -191,11 +192,21 @@ LOGGING = {
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler'
         }
     },
+    'loggers': {
+        'newrelic': {
+            'propagate': False
+        },
+        'django.request': {
+            'level': 'ERROR',  # ignore 404 warinig
+        },
+    },
     'root': {
         'handlers': ['console'],
         'level': 'INFO'
     }
 }
+
+RAVEN_CONFIG = {'dsn': os.environ.get("SENTRY_DSN", "")}
 
 
 ####################
