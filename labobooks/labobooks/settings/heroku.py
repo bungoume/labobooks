@@ -17,4 +17,4 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 
-LOGGING.update({'root': {'handlers': ['console', 'sentry']}})
+LOGGING.update({'root': {'handlers': ['console', 'sentry']}})  # NOQA
