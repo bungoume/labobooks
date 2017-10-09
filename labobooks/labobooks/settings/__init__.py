@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'core.middleware.DisableClientSideCachingMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'csp.middleware.CSPMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -207,6 +208,14 @@ LOGGING = {
 }
 
 RAVEN_CONFIG = {'dsn': os.environ.get("SENTRY_DSN", "")}
+
+CSP_DEFAULT_SRC = (
+    "'self'", "'unsafe-inline'", "'unsafe-eval'", 'cdnjs.cloudflare.com', 'labobooks.com')
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", 'cdnjs.cloudflare.com', 'fonts.googleapis.com')
+CSP_IMG_SRC = ("'self'", 'labobooks.com', 'images-fe.ssl-images-amazon.com', 'via.placeholder.com')
+CSP_FONT_SRC = ("'self'", 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com')
+CSP_REPORT_ONLY = True
+CSP_REPORT_URI = os.environ.get("CSP_REPORT_URI", "")
 
 
 ####################
