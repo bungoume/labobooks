@@ -116,12 +116,20 @@ def amazon_search(request):
     # data = openbd_dripper(r.json())
 
     book_info_list = []
+
     for item in data['items']:
+        if not item['isbn']:
+            continue
+        amazon_url = item.pop('amazon_url')
         book_info, _ = BookInfo.objects.get_or_create(**item)
         book_info_list.append(book_info)
+        item['amazon_url'] = amazon_url
 
-    # FIXME: orgも見る, 効率化
-    org = request.user.org_memberships.all()
+    orgs = request.user.org_memberships
+    try:
+        org = orgs.get(id_slug=request.query_params.get('org'))
+    except:
+        org = request.user.org_memberships.all()
     ddd = list(
         MyBook.objects
         .filter(organization__in=org)

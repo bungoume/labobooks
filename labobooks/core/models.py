@@ -141,6 +141,20 @@ class BookInfo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def amazon_url(self):
+        """ ISBNからamazon_urlを生成
+        """
+        try:
+            isbn_9 = self.isbn[3:-1]
+            cd = sum([int(x) * y for x, y in zip(isbn_9, range(1, 10))]) % 11
+            if cd == 10:
+                cd = 'X'
+            isbn10 = '{}{}'.format(isbn_9, cd)
+            return 'https://www.amazon.co.jp/dp/{}/'.format(isbn10)
+        except:
+            return ''
+
     class Meta:
         verbose_name = '書籍情報'
         verbose_name_plural = '書籍情報'

@@ -36,7 +36,7 @@ amazon_dripper_declaration = {
         "publisher": D(("ItemAttributes", "Publisher"), default=""),
         "book_size": D(("ItemAttributes", "Binding"), default=""),
         "author": D(("ItemAttributes", "Author"), default=""),
-        # "amazon_url": D("DetailPageURL", default=None),
+        "amazon_url": D("DetailPageURL", default=None),
     },
     "total": D(("ItemSearchResponse", "Items", "TotalResults"), converter=as_int, default=0),
 }

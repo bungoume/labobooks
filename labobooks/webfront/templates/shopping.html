@@ -35,13 +35,14 @@
         <tr v-for="item in items">
           <td><img v-bind:src="item.small_image_url"></td>
           <td>{{item.title}}</td>
-          <td>{{item.authors}}</td>
+          <td>{{item.author}}</td>
           <td>{{item.publisher}}</td>
           <td>{{item.publication_date}}</td>
           <td>
             <input class="isbn" type="hidden" v-bind:value="item.isbn">
             <a class="btn btn-default" v-bind:href="item.amazon_url" target="_blank">Amazon</a><br>
-            <button v-if="!item.in_my_books" class="btn btn-success book-add">書庫に追加</button>
+            <button v-if="!item.isbn" class="btn btn-warning" disabled="disabled">追加不可</button>
+            <button v-else-if="!item.in_my_books" class="btn btn-success book-add">書庫に追加</button>
             <button v-else class="btn btn-success" disabled="disabled">追加済み</button>
 
           </td>
@@ -127,7 +128,10 @@ function book_search(evt){
       .append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
 
     var keyword = $('#search input').val();
-    $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
+    $xhr('/api/info/v1/search', {
+        keyword: keyword,
+        org: window.location.pathname.split('/')[1], // FIXME
+      }).then(function(data){
         $('.overlay').remove();
         result_view.items = _.cloneDeep(data.items);
         book_data = data.items;
@@ -143,7 +147,7 @@ function add_book(evt){
 function submit_add_book(evt){
     evt.preventDefault();
     var isbn = $(this).parent().find('.isbn').val();
-    $.ajax({ 
+    $.ajax({
       type: 'POST',
       url: '/api/data/v1/mybook/',
       headers: { "X-CSRFToken": $.cookie("csrftoken") },
@@ -155,6 +159,12 @@ function submit_add_book(evt){
           purpose: $('#purpose').val(),
           money_source: $('#money_source').val(),
       }
+    })
+    .fail(function(a){
+      $('.content').prepend(alert_handlebars({type:'warning', title:'Request failed', body:a.statusText}));
+    })
+    .then(function(a){
+      $('.content').prepend(alert_handlebars({type:'info', title:'成功', body:'書庫に追加しました'}));
     });
 }
 
