@@ -22,6 +22,17 @@ def as_date(dt_str):
     return dt.date().isoformat()
 
 
+def list_to_str(list_or_str):
+    """ list形式はカンマ繋ぎにしてstrで返す
+    """
+    if isinstance(list_or_str, list):
+        try:
+            return ', '.join(list_or_str)
+        except:
+            pass
+    return list_or_str
+
+
 amazon_dripper_declaration = {
     "items": {
         "__type__": "list",
@@ -35,7 +46,7 @@ amazon_dripper_declaration = {
             ("ItemAttributes", "PublicationDate"), converter=as_date, default=None),
         "publisher": D(("ItemAttributes", "Publisher"), default=""),
         "book_size": D(("ItemAttributes", "Binding"), default=""),
-        "author": D(("ItemAttributes", "Author"), default=""),
+        "author": D(("ItemAttributes", "Author"), converter=list_to_str, default=""),
         "amazon_url": D("DetailPageURL", default=None),
     },
     "total": D(("ItemSearchResponse", "Items", "TotalResults"), converter=as_int, default=0),
