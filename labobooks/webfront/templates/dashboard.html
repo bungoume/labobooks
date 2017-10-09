@@ -28,7 +28,7 @@
               <th></th>
             </tr>
             <tr>
-              <td><img src="http://via.placeholder.com/40x50"></td>
+              <td><img src="https://via.placeholder.com/40x50"></td>
               <td>パーフェクトJavaScript</td>
               <td>後藤研究室</td>
               <td>2017/8/1</td>
@@ -123,7 +123,7 @@
 'use strict';
 
 $(function(){
-    $xhr('/api/data/v1/mybook').then(function(data){
+    $.ajax('/api/data/v1/mybook').then(function(data){
         $('.overlay').remove();
         $('.loading-img').remove();
 
@@ -142,7 +142,7 @@ function book_search(evt){
       .append('<div class="loading-img"></div>');
 
     var keyword = $('#search input').val();
-    $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
+    $.ajax('/api/info/v1/search', {keyword: keyword}).then(function(data){
         $('.overlay').remove();
         $('.loading-img').remove();
         result_view.$data.Items = _.cloneDeep(data.Items);

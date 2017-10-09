@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic.edit import FormView
 
@@ -27,9 +26,7 @@ class OrganizationView(LoginRequiredMixin, FormView):
     form_class = forms.OrganizationForm
     model = models.Organization
 
-
     def form_valid(self, form):
-        # import pdb;pdb.set_trace()
         form.save()
         form.instance.members.through.objects.create(
             organization=form.instance, user=self.request.user, role='owner')

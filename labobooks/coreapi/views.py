@@ -85,7 +85,7 @@ class BookInfoViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 def borrow(request):
-    return JsonResponse(data)
+    return JsonResponse({})
 
 
 def amazon_search(request):
@@ -122,7 +122,8 @@ def amazon_search(request):
 
     # FIXME: orgも見る, 効率化
     org = request.user.org_memberships.all()
-    ddd = list(MyBook.objects
+    ddd = list(
+        MyBook.objects
         .filter(organization__in=org)
         .filter(book_info__in=book_info_list)
         .values_list('book_info_id', flat=True)

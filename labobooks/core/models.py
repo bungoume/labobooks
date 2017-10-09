@@ -3,7 +3,6 @@ from uuid import uuid4
 
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
 
 
 USER_ROLES_CHOICES = (
@@ -30,7 +29,8 @@ ACTION_CHOICES = (
 
 class Organization(models.Model):
     name = models.CharField("組織名", max_length=191, help_text='例:後藤研究室')
-    id_slug = models.CharField("短縮名", max_length=191, unique=True, db_index=True,
+    id_slug = models.CharField(
+        "短縮名", max_length=191, unique=True, db_index=True,
         help_text='URLに利用されます。英数とハイフンのみ。 例:gotolab')
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
