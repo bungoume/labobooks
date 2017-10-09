@@ -1,6 +1,8 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.views.generic.edit import FormView
+
 
 from core import models
 from webfront import forms
@@ -20,7 +22,7 @@ def organization_new(request):
     return render(request, 'organization/new.html', {'form': form})
 
 
-class OrganizationView(FormView):
+class OrganizationView(LoginRequiredMixin, FormView):
     template_name = 'organization/new.html'
     form_class = forms.OrganizationForm
     model = models.Organization
