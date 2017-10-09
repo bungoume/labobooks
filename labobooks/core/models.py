@@ -1,3 +1,4 @@
+import datetime
 from uuid import uuid4
 
 from django.db import models
@@ -28,8 +29,9 @@ ACTION_CHOICES = (
 
 
 class Organization(models.Model):
-    name = models.CharField("組織名", max_length=191)
-    id_slug = models.CharField("短縮名", max_length=191)
+    name = models.CharField("組織名", max_length=191, help_text='例:後藤研究室')
+    id_slug = models.CharField("短縮名", max_length=191, unique=True, db_index=True,
+        help_text='URLに利用されます。英数とハイフンのみ。 例:gotolab')
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='OrganizationMember',
@@ -42,6 +44,13 @@ class Organization(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = '組織'
+        verbose_name_plural = '組織'
+
+    def __str__(self):
+        return self.name
 
 
 class OrganizationMember(models.Model):
@@ -64,9 +73,6 @@ class OrganizationMember(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = (('organization', 'user'), ('organization', 'invite_email'), )
-
     @property
     def is_pending(self):
         return self.user is None
@@ -74,13 +80,21 @@ class OrganizationMember(models.Model):
     def generate_token(self):
         return uuid4().hex
 
+    class Meta:
+        verbose_name = '組織メンバー'
+        verbose_name_plural = '組織メンバー'
+        unique_together = (('organization', 'user'), ('organization', 'invite_email'), )
+
+    def __str__(self):
+        return "{} - {}".format(self.organization, self.user)
+
 
 # 同じ本が複数あるときどうする?
 class MyBook(models.Model):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE)
     book_info = models.ForeignKey('BookInfo', on_delete=models.CASCADE)
 
-    buy_date = models.DateField("購入日", default=timezone.now)
+    buy_date = models.DateField("購入日", default=datetime.date.today)
     memo = models.TextField("メモ", blank=True)
     # buy_user = models.CharField("購入者", max_length=191, blank=True)
     # buy_at = models.CharField("購入場所", max_length=191, blank=True)
@@ -126,6 +140,13 @@ class BookInfo(models.Model):
     # genre_id = models.CharField("書籍ジャンル", max_length=191, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = '書籍情報'
+        verbose_name_plural = '書籍情報'
+
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):

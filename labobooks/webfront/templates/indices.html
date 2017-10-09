@@ -102,15 +102,16 @@
 
 
 $(function(){
-    $xhr('/api/data/v1/mybook').then(function(data){
-        $('.overlay').remove();
-        $('.loading-img').remove();
+  var org = window.location.pathname.split('/')[1];
+  $xhr('/api/data/v1/mybook', {org: org}).then(function(data){
+    $('.overlay').remove();
+    $('.loading-img').remove();
 
-        new Vue({
-            el: '#mybooks',
-            data: {items: data}
-        });
+    new Vue({
+      el: '#mybooks',
+      data: {items: data}
     });
+  });
 });
 
 

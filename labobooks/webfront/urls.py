@@ -20,9 +20,7 @@ urlpatterns = [
     url(r'^login/?$', RedirectView.as_view(pattern_name='account_login')),
 
     url(
-        r'^organizations/new/?$',
-        login_required(TemplateView.as_view(template_name="organization/new.html")),
-        name='organization_new'
+        r'^organizations/new/?$', views.OrganizationView.as_view(), name='organization_new'
     ),
     url(
         r'^(?P<organization_slug>[\w_-]+)/dashboard/?$',

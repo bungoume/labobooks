@@ -13,7 +13,11 @@ import requests
 
 from core.models import MyBook, BookInfo
 from coreapi.drippers import amazon_dripper
-from coreapi.serializers import MyBookSerializer, BookInfoSerializer
+from coreapi.serializers import (
+    MyBookSerializer,
+    BookInfoSerializer,
+    MyBookCreateSerializer,
+)
 
 
 amazon = bottlenose.Amazon(
@@ -38,7 +42,7 @@ class MyBookViewSet(viewsets.ModelViewSet):
 
         orgs = request.user.org_memberships
         try:
-            org = orgs.get(id_slug=request.query_params.get('org'))
+            org = orgs.filter(id_slug=request.query_params.get('org'))
         except:
             org = orgs.all()
         queryset = queryset.filter(organization__in=org)
@@ -66,7 +70,8 @@ class MyBookViewSet(viewsets.ModelViewSet):
         data = request.data.copy()
         data['organization'] = org.id
         data['book_info'] = data['isbn']
-        serializer = self.get_serializer(data=data)
+        # 初期生成時だけbookinfoが可変なので別serializerで暫定対応
+        serializer = MyBookCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(data)
@@ -75,11 +80,12 @@ class MyBookViewSet(viewsets.ModelViewSet):
 
 
 class BookInfoViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = BookInfo.objects.all()
     serializer_class = BookInfoSerializer
+
+
+def borrow(request):
+    return JsonResponse(data)
 
 
 def amazon_search(request):
@@ -109,8 +115,23 @@ def amazon_search(request):
     # r = requests.get(settings.OPENBD_API, params={'isbn': ','.join(isbn_list)})
     # data = openbd_dripper(r.json())
 
+    book_info_list = []
     for item in data['items']:
-        BookInfo(**item).save()
+        book_info, _ = BookInfo.objects.get_or_create(**item)
+        book_info_list.append(book_info)
+
+    # FIXME: orgも見る, 効率化
+    org = request.user.org_memberships.all()
+    ddd = list(MyBook.objects
+        .filter(organization__in=org)
+        .filter(book_info__in=book_info_list)
+        .values_list('book_info_id', flat=True)
+    )
+    for item in data['items']:
+        if item['isbn'] in ddd:
+            item['in_my_books'] = True
+        else:
+            item['in_my_books'] = False
 
     return JsonResponse(data)
 

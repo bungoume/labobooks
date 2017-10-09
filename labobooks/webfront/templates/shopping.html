@@ -41,7 +41,8 @@
           <td>
             <input class="isbn" type="hidden" v-bind:value="item.isbn">
             <a class="btn btn-default" v-bind:href="item.amazon_url" target="_blank">Amazon</a><br>
-            <button class="btn btn-default book-add">書庫に追加</button>
+            <button v-if="!item.in_my_books" class="btn btn-success book-add">書庫に追加</button>
+            <button v-else class="btn btn-success" disabled="disabled">追加済み</button>
 
           </td>
         </tr>
@@ -149,6 +150,7 @@ function submit_add_book(evt){
       data: {
           buy_date: $('#buy_date').val(),
           isbn: isbn,
+          org: window.location.pathname.split('/')[1], // FIXME
           manager: $('#manager').val(),
           purpose: $('#purpose').val(),
           money_source: $('#money_source').val(),
