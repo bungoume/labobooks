@@ -4,7 +4,7 @@ import dj_database_url
 
 ALLOWED_HOSTS = ['*']
 
-DEBUG = False
+DEBUG = bool(os.environ.get('DEBUG'))
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
