@@ -28,7 +28,7 @@ def list_to_str(list_or_str):
     if isinstance(list_or_str, list):
         try:
             return ', '.join(list_or_str)
-        except:
+        except Exception:
             pass
     return list_or_str
 

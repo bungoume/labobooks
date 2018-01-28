@@ -1,5 +1,3 @@
-# from amazon.api import AmazonAPI
-import bottlenose
 from cachetools import cached, TTLCache
 import xmltodict
 
@@ -13,19 +11,13 @@ import requests
 
 from core.models import MyBook, BookInfo
 from coreapi.drippers import amazon_dripper
+from coreapi.apps import get_amazon
 from coreapi.serializers import (
     MyBookSerializer,
     BookInfoSerializer,
     MyBookCreateSerializer,
 )
 
-
-amazon = bottlenose.Amazon(
-    settings.AMAZON_PRODUCT_ADVERTISING_ID,
-    settings.AMAZON_PRODUCT_ADVERTISING_SECRET,
-    settings.AMAZON_ASSOCIATE_TAG,
-    Region=settings.AMAZON_ASSOCIATE_REGION,
-    MaxQPS=0.9)
 
 amazon_cache = TTLCache(256, ttl=3600)
 
@@ -43,7 +35,7 @@ class MyBookViewSet(viewsets.ModelViewSet):
         orgs = request.user.org_memberships
         try:
             org = orgs.filter(id_slug=request.query_params.get('org'))
-        except:
+        except Exception:
             org = orgs.all()
         queryset = queryset.filter(organization__in=org)
 
@@ -65,7 +57,7 @@ class MyBookViewSet(viewsets.ModelViewSet):
         orgs = request.user.org_memberships
         try:
             org = orgs.get(id_slug=request.query_params.get('org'))
-        except:
+        except Exception:
             org = orgs.last()
         data = request.data.copy()
         data['organization'] = org.id
@@ -98,14 +90,14 @@ def amazon_search(request):
         retry = 3
         while retry:
             try:
-                res = amazon.ItemSearch(
+                res = get_amazon().ItemSearch(
                     Keywords=keyword,
                     SearchIndex="Books",
                     ResponseGroup="Images,ItemAttributes"
                 )
                 data = xmltodict.parse(res)
                 return data
-            except:
+            except Exception:
                 retry -= 1
                 if retry <= 0:
                     raise
@@ -128,7 +120,7 @@ def amazon_search(request):
     orgs = request.user.org_memberships
     try:
         org = orgs.get(id_slug=request.query_params.get('org'))
-    except:
+    except Exception:
         org = request.user.org_memberships.all()
     ddd = list(
         MyBook.objects

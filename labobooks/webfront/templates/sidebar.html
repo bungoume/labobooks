@@ -6,7 +6,7 @@
             </a>
         </li>
         <li>
-            <a href="indices">
+            <a href="{% url 'indices' organization_slug %}">
                 <i class="fa fa-database"></i> <span>書庫を見る</span>
             </a>
         </li>
@@ -15,6 +15,12 @@
                 <i class="fa fa-shopping-cart"></i> <span>書籍を追加する</span>
             </a>
         </li>
+        <li>
+            <a href="{% url 'organization_settings' organization_slug %}">
+                <i class="fa fa-user-circle"></i> <span>組織の管理</span>
+            </a>
+        </li>
+
         <hr>
         <li>
             <a href="wishlist">

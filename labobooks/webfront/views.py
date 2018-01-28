@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views.generic.edit import FormView
-
+from django.views.generic.base import TemplateView
 
 from core import models
 from webfront import forms
@@ -31,3 +31,7 @@ class OrganizationView(LoginRequiredMixin, FormView):
         form.instance.members.through.objects.create(
             organization=form.instance, user=self.request.user, role='owner')
         return redirect('dashboard', organization_slug=form.instance.id_slug)
+
+
+class OrganizationSettingsView(LoginRequiredMixin, TemplateView):
+    template_name = 'organization/settings.html'

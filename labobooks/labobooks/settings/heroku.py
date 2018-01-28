@@ -1,4 +1,5 @@
 from labobooks.settings import *  # NOQA
+import os
 import dj_database_url
 
 

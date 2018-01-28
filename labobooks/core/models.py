@@ -152,7 +152,7 @@ class BookInfo(models.Model):
                 cd = 'X'
             isbn10 = '{}{}'.format(isbn_9, cd)
             return 'https://www.amazon.co.jp/dp/{}/'.format(isbn10)
-        except:
+        except Exception:
             return ''
 
     class Meta:
