@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  test:
+    working_directory: ~/myapp
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - checkout
+      - run:
+          command: python -m venv env
+      - restore_cache:
+          keys:
+            - v1-myapp-{{ checksum "requirements.txt" }}
+      - run:
+          name: Run tox
+          command: |
+            . env/bin/activate
+            pip install -U tox
+            tox
+      - save_cache:
+          key: v1-myapp-{{ checksum "requirements.txt" }}
+          paths:
+            - ~/myapp/.tox
+            - ~/myapp/env
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <title>Labobooks | 書籍管理ツール</title>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://blackrockdigital.github.io/startbootstrap-freelancer/css/freelancer.min.css" rel="stylesheet"> -->
+    <!-- <link href="https://blackrockdigital.github.io/startbootstrap-clean-blog/css/clean-blog.min.css" rel="stylesheet"> -->
+    {% include 'welcome-meta.html' %}
+<style>
+.intro-header {
+  background-color: #777777;
+  background-image: url('/static/img/icons-green.jpg');
+  background-repeat: repeat;
+  background-attachment: scroll;
+  /*background-size: cover;*/
+  -o-background-size: cover;
+  margin-bottom: 50px;
+}
+.intro-header .site-heading,
+.intro-header .post-heading,
+.intro-header .page-heading {
+  padding: 100px 0 50px;
+  color: white;
+}
+@media only screen and (min-width: 768px) {
+  .intro-header .site-heading,
+  .intro-header .post-heading,
+  .intro-header .page-heading {
+    padding: 150px 0;
+  }
+}
+.intro-header .site-heading,
+.intro-header .page-heading {
+  text-align: center;
+}
+.intro-header .site-heading h1,
+.intro-header .page-heading h1 {
+  margin-top: 0;
+  font-size: 50px;
+}
+.intro-header .site-heading .subheading,
+.intro-header .page-heading .subheading {
+  font-size: 24px;
+  line-height: 1.1;
+  display: block;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  margin: 10px 0 0;
+}
+@media only screen and (min-width: 768px) {
+  .intro-header .site-heading h1,
+  .intro-header .page-heading h1 {
+    font-size: 80px;
+  }
+}
+.intro-header .post-heading h1 {
+  font-size: 35px;
+}
+.intro-header .post-heading .subheading,
+.intro-header .post-heading .meta {
+  line-height: 1.1;
+  display: block;
+}
+.intro-header .post-heading .subheading {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  margin: 10px 0 30px;
+  font-weight: 600;
+}
+.intro-header .post-heading .meta {
+  font-family: 'Lora', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 20px;
+}
+.intro-header .post-heading .meta a {
+  color: white;
+}
+@media only screen and (min-width: 768px) {
+  .intro-header .post-heading h1 {
+    font-size: 55px;
+  }
+  .intro-header .post-heading .subheading {
+    font-size: 30px;
+  }
+}
+
+footer {
+  padding: 25px 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  background-color: #222222; }
+  footer p {
+    font-size: 12px;
+    margin: 0; }
+  footer ul {
+    margin-bottom: 0; }
+    footer ul li a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3); }
+      footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li a.active {
+        text-decoration: none; }
+
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          Menu <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="/">Labobooks</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav navbar-right">
+          <!-- <li><a href="about">About</a></li> -->
+          <li><a href="{% url 'account_login' %}">ログイン</a></li>
+          <li><a href="{% url 'account_signup' %}">新規登録</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="intro-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+            <h1><img src="/static/img/bookshelf-icon.png"> Labobooks</h1>
+            <span class="subheading">棚に埋もれている本を掘り起こそう</span>
+            <hr class="small">
+            <a href="{% url 'account_signup' %}" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">新規登録</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div>
+            <h2>本棚管理</h2>
+            <h3>書籍検索や本の貸出など、本棚をカンタンに管理できます</h3>
+          </div>
+          <hr>
+          <div>
+            <h2>読みたい本リスト</h2>
+            <h3>欲しい本をメモし、書庫管理者に希望を伝えることが出来ます</h3>
+          </div>
+          <hr>
+          <div>
+            <h2>書籍にコメント</h2>
+            <h3>感想の共有はもちろん、自分専用のメモも残せます</h3>
+          </div>
+          <hr>
+          <div>
+            <a href="{% url 'account_signup' %}" class="btn btn-default btn-lg btn-warning"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">新規登録</span></a>
+          </div>
+          <hr>
+      </div>
+    </div>
+
+<!--     <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div>
+            <h2>大学の研究室で</h2>
+            <h3>欲しい本をメモし、書庫管理者に希望を伝えることが出来ます</h3>
+          </div>
+          <hr>
+          <div>
+            <h2>会社の本棚管理に</h2>
+            <h3>バーコードリーダーと社員証と連携して簡単に貸し借り出来ます</h3>
+          </div>
+          <hr>
+          <div>
+            <h2>個人でも</h2>
+            <h3>友人に貸した本</h3>
+          </div>
+          <hr>
+          <div>
+            <a href="{% url 'account_signup' %}" class="btn btn-default btn-lg btn-warning"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">新規登録</span></a>
+          </div>
+          <hr>
+      </div>
+    </div>
+ -->
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2017 Labobooks. All Rights Reserved.</p>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <a href="{% url 'about' %}">当サイトについて</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{% url 'terms' %}">利用規約</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>

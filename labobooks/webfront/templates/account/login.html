@@ -1,39 +1,55 @@
 {% extends "site_base.html" %}
 
+{% load account_tags %}
 {% load i18n %}
 {% load bootstrap %}
 
 {% block head_title %}{% trans "Log in" %}{% endblock %}
 
+{% block sidebar %}{% endblock %}
+
 {% block body %}
-<div class="row"><div class="col-md-6 col-md-offset-2">
-    <form method="POST" action="{% url "account_login" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-        <legend>ログイン</legend>
-        {% csrf_token %}
-        {{ form|bootstrap }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
-        {% endif %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <form method="POST" action="{% url "account_login" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+            <legend>{% trans "Log in to an existing account" %}</legend>
+            {% csrf_token %}
+            {{ form|bootstrap }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
 
+            <button type="submit" class="btn bg-olive btn-block">{% trans "Log in" %}</button>  
+        </form>
+        <a href="{% url "account_password_reset" %}" class="btn btn-link">{% trans "Forgot your password?" %}</a>
 
-        <button type="submit" class="btn bg-olive btn-block">{% trans "Log in" %}</button>  
-        <p><a href="{% url "account_password_reset" %}">I forgot my password</a></p>
-        <p><a href="{% url "account_signup" %}">Register a new membership</a></p>
-    </form>
+        <div class="margin text-center">
+            <span>Sign in using social networks</span>
+            <br/>
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></a>
+            <a href="{% url 'social:begin' 'twitter' %}" class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></a>
+            <a href="{% url 'social:begin' 'google' %}" class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></a>
+        </div>
 
-    <div class="margin text-center">
-        <span>Sign in using social networks</span>
-        <br/>
-        <a href="{% url 'social:begin' 'facebook' %}" class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></a>
-        <a href="{% url 'social:begin' 'twitter' %}" class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></a>
-        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></a>
+        <hr>
+
+        <p class="login-signup">
+            <small>
+                {% trans "Don't have an account?" %}  <strong><a href="{% urlnext 'account_signup' %}">{% trans "Sign up" %}</a></strong>
+            </small>
+        </p>
+
     </div>
-</div></div>
+    <div class="col-md-4">
+        {% include "account/_login_sidebar.html" %}
+    </div>
+</div>
 {% endblock %}
 
-{% block extra_script %}
+{% block scripts %}
+{{ block.super }}
 <script>
-    $(function(){
+    $(document).ready(function() {
         $('#id_username').focus();
     });
 </script>

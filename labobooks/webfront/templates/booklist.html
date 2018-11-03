@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title%}ダッシュボード{% endblock %}
+
+{% block content %}
+{% verbatim %}
+<section class="content-header">
+    <h1>ダッシュボード</h1>
+</section>
+
+<section class="content">
+
+<div class="box box-success">
+    <div class="box-header">
+        <h3 class="box-title">書庫の本一覧</h3>
+    </div>
+    <div class="box-body">
+        <div id="mybooks" class="table-responsive no-padding">
+            <table class="table table-hover"><tbody>
+                <tr>
+                    <th></th>
+                    <th>タイトル</th>
+                    <th>発売日</th>
+                    <th>購入日</th>
+                    <th>資金源</th>
+                    <th></th>
+                </tr>
+                <tr v-repeat="item:Items">
+                    <td><img src="{{item.bookinfo.image_url}}"></td>
+                    <td>{{item.bookinfo.title}}</td>
+                    <td>{{item.bookinfo.sales_date}}</td>
+                    <td>{{item.buy_date}}</td>
+                    <td>{{item.money_source}}</td>
+                    <td></td>
+                </tr>
+            </tbody></table>
+        </div>
+        <div class="overlay"></div>
+        <div class="loading-img"></div>
+    </div>
+</div>
+
+</section>
+{% endverbatim %}
+{% endblock %}
+
+
+{% block scripts %}
+{{ block.super }}
+{% verbatim %}
+<script>
+'use strict';
+
+$(function(){
+    $xhr('/api/data/v1/mybook').then(function(data){
+        $('.overlay').remove();
+        $('.loading-img').remove();
+
+        new Vue({
+            el: '#mybooks',
+            data: {Items: data}
+        });
+    });
+});
+
+</script>
+{% endverbatim %}
+{% endblock %}

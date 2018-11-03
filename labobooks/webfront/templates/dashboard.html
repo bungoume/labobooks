@@ -10,34 +10,106 @@
 
 <section class="content">
 
-<div class="box box-success">
-    <div class="box-header">
-        <h3 class="box-title">書庫の本一覧</h3>
-    </div>
-    <div class="box-body">
-        <div id="mybooks" class="table-responsive no-padding">
-            <table class="table table-hover"><tbody>
-                <tr>
-                    <th></th>
-                    <th>タイトル</th>
-                    <th>発売日</th>
-                    <th>購入日</th>
-                    <th>資金源</th>
-                    <th></th>
-                </tr>
-                <tr v-repeat="item:Items">
-                    <td><img src="{{item.bookinfo.image_url}}"></td>
-                    <td>{{item.bookinfo.title}}</td>
-                    <td>{{item.bookinfo.sales_date}}</td>
-                    <td>{{item.buy_date}}</td>
-                    <td>{{item.money_source}}</td>
-                    <td></td>
-                </tr>
-            </tbody></table>
+<div class="row">
+  <div class="col-md-9">
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">借りてる本</h3>
+      </div>
+      <div class="box-body">
+        <div class="table-responsive no-padding">
+          <table class="table table-hover"><tbody>
+            <tr>
+              <th></th>
+              <th>タイトル</th>
+              <th>書庫</th>
+              <th>貸出日</th>
+              <th>返却期限</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td><img src="https://via.placeholder.com/40x50"></td>
+              <td>パーフェクトJavaScript</td>
+              <td>後藤研究室</td>
+              <td>2017/8/1</td>
+              <td>2017/9/1(あと3日)</td>
+              <td><button class="btn btn-sm btn-info">コメント</button><br>
+                  <button class="btn btn-sm btn-success">返却</button></td>
+            </tr>
+          </tbody></table>
         </div>
         <div class="overlay"></div>
         <div class="loading-img"></div>
+      </div>
     </div>
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">書庫の本(人気順)</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool">書庫へ</button>
+        </div>
+      </div>
+    </div>
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">最近のイベント</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">オススメの本</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool">購入</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Members</h3>
+
+        <div class="box-tools pull-right">
+          <span class="label label-danger">8 New Members</span>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">
+        <ul class="users-list clearfix">
+          <li>
+            <img src="dist/img/user1-128x128.jpg" alt="User Image">
+            <a class="users-list-name" href="#">Alexander Pierce</a>
+            <span class="users-list-date">Today</span>
+          </li>
+          <li>
+            <img src="dist/img/user8-128x128.jpg" alt="User Image">
+            <a class="users-list-name" href="#">Norman</a>
+            <span class="users-list-date">Yesterday</span>
+          </li>
+          <li>
+            <img src="dist/img/user7-128x128.jpg" alt="User Image">
+            <a class="users-list-name" href="#">Jane</a>
+            <span class="users-list-date">12 Jan</span>
+          </li>
+        </ul>
+        <!-- /.users-list -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-center">View All Users</div>
+      <!-- /.box-footer -->
+    </div>
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ご意見・ご要望</h3>
+      </div>
+    </div>
+  </div>
 </div>
 
 </section>
@@ -45,13 +117,13 @@
 {% endblock %}
 
 
-{% block tail_script %}
+{% block scripts %}
 {% verbatim %}
 <script>
 'use strict';
 
 $(function(){
-    $xhr('/api/data/v1/mybook').then(function(data){
+    $.ajax('/api/data/v1/mybook').then(function(data){
         $('.overlay').remove();
         $('.loading-img').remove();
 
@@ -70,7 +142,7 @@ function book_search(evt){
       .append('<div class="loading-img"></div>');
 
     var keyword = $('#search input').val();
-    $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
+    $.ajax('/api/info/v1/search', {keyword: keyword}).then(function(data){
         $('.overlay').remove();
         $('.loading-img').remove();
         result_view.$data.Items = _.cloneDeep(data.Items);

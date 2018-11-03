@@ -1,0 +1,31 @@
+{% extends "site_base.html" %}
+
+{% load account_tags %}
+{% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}組織・研究室の作成{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <form method="POST" action="{% url "organization_new" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+            <legend>組織・研究室の作成</legend>
+            {% csrf_token %}
+            {{ form|bootstrap }}
+            <button type="submit" class="btn btn-default btn-block">作成</button>  
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+    $(document).ready(function() {
+        $('#id_username').focus();
+    });
+</script>
+{% endblock %}

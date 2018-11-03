@@ -28,6 +28,11 @@ Herokuのアカウントがあれば、以下のボタンを押すだけです�
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
+## Memo
+templatesに labobooks.com 向けの利用規約などが含まれています。
+適宜修正してご利用ください。
+
+
 ## License
 
 [MIT](LICENSE)

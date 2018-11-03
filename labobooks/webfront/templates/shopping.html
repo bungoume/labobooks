@@ -26,23 +26,27 @@
       <table class="table table-hover"><tbody>
         <tr>
           <th></th>
-            <th>タイトル</th>
-            <th>著者</th>
-            <th>出版社</th>
-            <th>発売日</th>
-            <th></th>
-          </tr>
-          <tr v-repeat="item:Items">
-            <td><img src="{{item.smallImageUrl}}"></td>
-            <td>{{item.title}}</td>
-            <td>{{item.author}}</td>
-            <td>{{item.publisherName}}</td>
-            <td>{{item.salesDate}}</td>
-            <td>
-              <input class="isbn" type="hidden" value="{{item.isbn}}">
-              <button class="btn btn-default book-add">追加</button>
-            </td>
-          </tr>
+          <th>タイトル</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>発売日</th>
+          <th></th>
+        </tr>
+        <tr v-for="item in items">
+          <td><img v-bind:src="item.small_image_url"></td>
+          <td>{{item.title}}</td>
+          <td>{{item.author}}</td>
+          <td>{{item.publisher}}</td>
+          <td>{{item.publication_date}}</td>
+          <td>
+            <input class="isbn" type="hidden" v-bind:value="item.isbn">
+            <a class="btn btn-default" v-bind:href="item.amazon_url" target="_blank">Amazon</a><br>
+            <button v-if="!item.isbn" class="btn btn-warning" disabled="disabled">追加不可</button>
+            <button v-else-if="!item.in_my_books" class="btn btn-success book-add">書庫に追加</button>
+            <button v-else class="btn btn-success" disabled="disabled">追加済み</button>
+
+          </td>
+        </tr>
       </tbody></table>
     </div>
   </div>
@@ -53,7 +57,8 @@
 {% endblock %}
 
 
-{% block tail_script %}
+{% block scripts %}
+{{ block.super }}
 {% verbatim %}
 <script type="text/template" id="modal-template">
 <div class="modal-dialog modal-lg">
@@ -104,11 +109,12 @@ var book_data;
 $(function(){
     result_view = new Vue({
         el: '#search-result',
-        data: {Items: []}
+        data: {items: []}
     });
     init();
     $('#search').on('submit', book_search);
-    $('#search-result').on('click', '.book-add', add_book);
+    // $('#search-result').on('click', '.book-add', add_book);
+    $('#search-result').on('click', '.book-add', submit_add_book);
     $('#myModal').on('submit', '#add_book_form', submit_add_book);
 });
 
@@ -122,61 +128,44 @@ function book_search(evt){
       .append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
 
     var keyword = $('#search input').val();
-    $xhr('/api/info/v1/search', {keyword: keyword}).then(function(data){
+    $xhr('/api/info/v1/search', {
+        keyword: keyword,
+        org: window.location.pathname.split('/')[1], // FIXME
+      }).then(function(data){
         $('.overlay').remove();
-        result_view.$data.Items = _.cloneDeep(data.Items);
-        book_data = data.Items;
+        result_view.items = _.cloneDeep(data.items);
+        book_data = data.items;
     });
 }
 
 function add_book(evt){
     var isbn = $(this).parent().find('input.isbn').val();
     var book = _.find(book_data, function(o){return o.isbn == isbn});
-    $('#myModal').html(Hogan.compile(modal_template).render(book)).modal();
+    $('#myModal').html(Handlebars.compile(modal_template)(book)).modal();
 }
 
 function submit_add_book(evt){
     evt.preventDefault();
-    var isbn = $('#isbn').val();
-    var book = _.find(book_data, function(o){return o.isbn == isbn});
-    $.ajax({ 
-        type: 'POST',
-        url: '/api/data/v1/bookinfo/',
-        headers: { "X-CSRFToken": $.cookie("csrftoken") },
-        data: {
-            isbn: book.isbn,
-            title: book.title,
-            title_kana: book.titleKana,
-            sub_title: book.subTitle,
-            sub_title_kana: book.subTitleKana,
-            series_name: book.seriesName,
-            series_name_kana: book.seriesNameKana,
-            author: book.author,
-            author_kana: book.authorKana,
-            publisher_name: book.publisherName,
-            book_size: book.size,
-            item_caption: book.itemCaption,
-            sales_date: Date.create(book.salesDate, 'ja').format('{yyyy}-{MM}-{dd}'),
-            item_price: book.itemPrice,
-            image_url: book.smallImageUrl,
-            genre_id: book.booksGenreId,
-        }
-    }).then(function(data){
-        $.ajax({ 
-            type: 'POST',
-            url: '/api/data/v1/mybook/',
-            headers: { "X-CSRFToken": $.cookie("csrftoken") },
-            data: {
-                buy_date: $('#buy_date').val(),
-                book_info: data.isbn,
-                manager: $('#manager').val(),
-                purpose: $('#purpose').val(),
-                money_source: $('#money_source').val(),
-            }
-        });
+    var isbn = $(this).parent().find('.isbn').val();
+    $.ajax({
+      type: 'POST',
+      url: '/api/data/v1/mybook/',
+      headers: { "X-CSRFToken": $.cookie("csrftoken") },
+      data: {
+          buy_date: $('#buy_date').val(),
+          isbn: isbn,
+          org: window.location.pathname.split('/')[1], // FIXME
+          manager: $('#manager').val(),
+          purpose: $('#purpose').val(),
+          money_source: $('#money_source').val(),
+      }
+    })
+    .fail(function(a){
+      $('.content').prepend(alert_handlebars({type:'warning', title:'Request failed', body:a.statusText}));
+    })
+    .then(function(a){
+      $('.content').prepend(alert_handlebars({type:'info', title:'成功', body:'書庫に追加しました'}));
     });
-
-    $('#myModal').modal('hide');
 }
 
 

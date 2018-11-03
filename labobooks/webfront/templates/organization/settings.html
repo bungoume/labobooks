@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load account_tags %}
+{% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}組織・研究室の編集{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        * 一般名
+        * 短縮名
+
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        * メンバー管理
+        * メンバーを追加
+        * 権限変更(owner, admin, member)
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+    $(document).ready(function() {
+        $('#id_username').focus();
+    });
+</script>
+{% endblock %}

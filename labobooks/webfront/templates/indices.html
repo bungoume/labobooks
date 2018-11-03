@@ -3,18 +3,117 @@
 {% block title%}ダッシュボード{% endblock %}
 
 {% block content %}
+{% verbatim %}
 <section class="content-header">
 </section>
 
 <section class="content">
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">書庫の本</h3>
+      </div>
+      <div class="box-body">
+        <form id="search" role="form">
+          <div class="input-group input-group-sm">
+            <input class="form-control input-lg" type="text" placeholder="本のタイトルを入力">
+            <span class="input-group-btn">
+              <button class="btn btn-info btn-flat" type="submit">検索</button>
+            </span>
+          </div>
+        </form>
+        <div id="mybooks" class="table-responsive no-padding">
+          <table class="table table-hover"><tbody>
+            <tr>
+              <th></th>
+              <th>タイトル</th>
+              <th>書庫</th>
+              <th>購入日</th>
+              <th>返却期限</th>
+            </tr>
+            <tr v-for="item in items">
+              <td><img v-bind:src="item.book_info.small_image_url"></td>
+              <td>{{item.book_info.title}}</td>
+              <td>{{item.book_info.author}}</td>
+              <td>{{item.buy_date}}</td>
+              <td>{{item.state}}</td>
+            </tr>
+          </tbody></table>
+        </div>
+        <div class="overlay"></div>
+        <div class="loading-img"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">貸出中の本</h3>
+      </div>
+      <div class="box-body">
+        <div class="table-responsive no-padding">
+          <table class="table table-hover"><tbody>
+            <tr>
+              <th>タイトル</th>
+              <th>貸出日</th>
+              <th>借り手</th>
+            </tr>
+            <tr>
+              <td>パーフェクトJavaScript</td>
+              <td>2017/8/1</td>
+              <td>鈴木</td>
+            </tr>
+          </tbody></table>
+        </div>
+        <div class="overlay"></div>
+        <div class="loading-img"></div>
+      </div>
+    </div>
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">オススメの本</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool">購入</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ご意見・ご要望</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
 </section>
+{% endverbatim %}
 {% endblock %}
 
 
-{% block tail_script %}
+{% block scripts %}
+{{ block.super }}
 {% verbatim %}
 <script>
 'use strict';
+
+
+$(function(){
+  var org = window.location.pathname.split('/')[1];
+  $xhr('/api/data/v1/mybook', {org: org}).then(function(data){
+    $('.overlay').remove();
+    $('.loading-img').remove();
+
+    new Vue({
+      el: '#mybooks',
+      data: {items: data}
+    });
+  });
+});
+
 
 </script>
 {% endverbatim %}
